@@ -60,6 +60,29 @@ resource "aws_route_table" "vpc-rt" {
 
   vpc_id = aws_vpc.vpc.id
 
+  dynamic "route" {
+    for_each  = var.routes
+    content {
+
+// One of the following destination arguments must be supplied:
+      cidr_block = lookup(route.value, "cidr_block", null)
+      ipv6_cidr_block = lookup(route.value, "ipv6_cidr_block", null)
+      destination_prefix_list_id = lookup(route.value, "destination_prefix_list_id", null)
+
+// One of the following target arguments must be supplied:
+      carrier_gateway_id = lookup(route.value, "carrier_gateway_id", null)
+      core_network_arn = lookup(route.value, "core_network_arn", null)
+      egress_only_gateway_id = lookup(route.value, "egress_only_gateway_id", null)
+      gateway_id = lookup(route.value, "gateway_id", null)
+      local_gateway_id =  lookup(route.value, "local_gateway_id", null)
+      nat_gateway_id = lookup(route.value, "nat_gateway_id", null)
+      network_interface_id = lookup(route.value, "network_interface_id", mull)
+      transit_gateway_id = lookup(route.value, "transit_gateway_id", null)
+      vpc_endpoint_id = lookup(route.value, "vpc_endpoint_id", null)
+      vpc_peering_connection_id = lookup(route.value, "vpc_peering_connection_id", null)
+    }
+  }
+
   route {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.vpc-natgw[count.index].id
@@ -75,6 +98,29 @@ resource "aws_route_table_association" "vpc-rt-assoc" {
 
 resource "aws_default_route_table" "vpc-defaul-route-table" {
   default_route_table_id = aws_vpc.vpc.default_route_table_id
+
+  dynamic "route" {
+    for_each  = var.routes
+    content {
+
+// One of the following destination arguments must be supplied:
+      cidr_block = lookup(route.value, "cidr_block", null)
+      ipv6_cidr_block = lookup(route.value, "ipv6_cidr_block", null)
+      destination_prefix_list_id = lookup(route.value, "destination_prefix_list_id", null)
+
+// One of the following target arguments must be supplied:
+      carrier_gateway_id = lookup(route.value, "carrier_gateway_id", null)
+      core_network_arn = lookup(route.value, "core_network_arn", null)
+      egress_only_gateway_id = lookup(route.value, "egress_only_gateway_id", null)
+      gateway_id = lookup(route.value, "gateway_id", null)
+      local_gateway_id =  lookup(route.value, "local_gateway_id", null)
+      nat_gateway_id = lookup(route.value, "nat_gateway_id", null)
+      network_interface_id = lookup(route.value, "network_interface_id", mull)
+      transit_gateway_id = lookup(route.value, "transit_gateway_id", null)
+      vpc_endpoint_id = lookup(route.value, "vpc_endpoint_id", null)
+      vpc_peering_connection_id = lookup(route.value, "vpc_peering_connection_id", null)
+    }
+  }
 
   route {
     cidr_block = "0.0.0.0/0"
