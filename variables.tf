@@ -37,7 +37,7 @@ variable "routes" {
 
 // One of the following target arguments must be supplied:
     carrier_gateway_id = optional(string)
-    core_netwlr_arn = optional(string)
+    core_network_arn = optional(string)
     egress_only_gateway_id = optional(string)
     gateway_id = optional(string)
     local_gateway_id = optional(string)
