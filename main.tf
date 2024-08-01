@@ -43,7 +43,7 @@ resource "aws_subnet" "vpc-public-subnet" {
 
 resource "aws_eip" "vpc-natgw-eip" {
   count = "${length(var.azs)}"
-  vpc = true
+  domain = "vpc"
 }
 
 resource "aws_nat_gateway" "vpc-natgw" {
